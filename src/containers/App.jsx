@@ -6,12 +6,8 @@ import { type Dispatch } from 'redux';
 import Grid from '../components/Grid';
 import Sidebar from '../components/Sidebar';
 import ProductComponent from '../components/Product';
-<<<<<<< HEAD
-import { type Product, type Category } from '../types';
-=======
 import Cart from './Cart';
 import { type Product, type Category, type ReduxState } from '../types';
->>>>>>> 3facb92f6108b8eeb552d872f9ba403d162e91e1
 import s from './App.css';
 import { getAllProducts, getAllCategories, receiveCategories, receiveProducts, addToCart, type Action } from '../actions';
 
@@ -57,17 +53,11 @@ class App extends React.Component<Props, State> {
     this.props.getCategories();
   }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
   addProductToCart = (productId: ?string) => {
     axios.post('http://develop.plataforma5.la:3000/api/cart/', { productId });
   }
-=======
-  addProduct = () => {}
->>>>>>> 3facb92f6108b8eeb552d872f9ba403d162e91e1
 
-=======
->>>>>>> d82b476fae166b5378ecb57f5b7354fbe94c140c
   render() {
     return (
       this.props.loading ?
@@ -95,15 +85,6 @@ class App extends React.Component<Props, State> {
               />
               <Route
                 path="/products/:id"
-<<<<<<< HEAD
-                render={(props: ContextRouter) => (
-                  <ProductComponent
-                    {...props}
-                    product={this.state.products.find(product =>
-                      String(product.id) === props.match.params.id)}
-                  />
-                )}
-=======
                 render={(props: ContextRouter) => {
                   const selectedProduct = this.props.products.find(product =>
                     String(product.id) === props.match.params.id);
@@ -115,7 +96,6 @@ class App extends React.Component<Props, State> {
                     />
                 );
               }}
->>>>>>> 3facb92f6108b8eeb552d872f9ba403d162e91e1
               />
               <Redirect exact from="/" to="/products" />
               <Route render={() => <div>Page Not Found</div>} />

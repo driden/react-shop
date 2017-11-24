@@ -15,7 +15,20 @@ export type Category = {
 };
 
 export type CartItem = {
-  quantity: number,
   product: Product,
-  id: number,
+  quantity: number
+}
+
+export type CartState = {
+  items: CartItem[]
+}
+export type ProductState = {
+  items: Product[],
+  categories: Category[],
+  isLoading: boolean
+}
+
+export type ReduxState = {
+  cart: CartState,
+  products: ProductState,
 }

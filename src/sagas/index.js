@@ -1,19 +1,16 @@
-import { take, put, call, fork, select, takeEvery, all } from 'redux-saga/effects';
-import {GET_PRODUCTS, GET_CATEGORIES, RECEIVE_CATEGORIES,  receiveProducts, receiveCategories} from '../actions';
-import axios from 'axios';
+import { put, call, fork, takeEvery, all } from 'redux-saga/effects';
+import axios, { type $AxiosXHR } from 'axios';
+// @flow
+import { GET_PRODUCTS, receiveProducts, receiveCategories } from '../actions';
+import { type Product, type Category } from '../types';
+// const host = 'http://localhost:3000';
+const host: string = 'http://develop.plataforma5.la:3000';
 
-//const host = 'http://localhost:3000';
-const host = 'http://develop.plataforma5.la:3000';
-
-
-const getAllProductsAPI = () => axios.get(`${host}/api/products`, {
-      headers: {
-        'Accept': 'application/json'
-      }
-    }).then(response => response.data)
-    .catch(err => {
-      throw err;
-    });
+const getAllProductsAPI: () => Promise<Product[] | Error> = () => axios.get(`${host}/api/products`)
+  .then((response: $AxiosXHR<Product[]>) => response.data)
+  .catch((err: Error) => {
+    throw err;
+  });
 
 // const getAllCategoriesAPI = () => axios.get(`${host}/api/categories`, {
 //       headers: {
@@ -26,11 +23,11 @@ const getAllProductsAPI = () => axios.get(`${host}/api/products`, {
 
 // nuestro Saga: este realizará la accion asincrónica
 export function* getAllProductsAndCategories() {
-  const products = yield call(getAllProductsAPI);
-  const categories = yield call(axios.get, `${host}/api/categories`);
+  const products: Product[] = yield call(getAllProductsAPI);
+  const categories: $AxiosXHR<Category[]> = yield call(axios.get, `${host}/api/categories`);
   yield [
     put(receiveProducts(products)),
-    put(receiveCategories(categories.data))
+    put(receiveCategories(categories.data)),
   ];
 }
 
@@ -51,7 +48,7 @@ export function* watchGetProducts() {
 }
 
 export default function* root() {
- yield all([
+  yield all([
     fork(watchGetProducts),
- ])
+  ]);
 }

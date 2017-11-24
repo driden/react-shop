@@ -1,13 +1,17 @@
-import { ADD_TO_CART, REMOVE_FROM_CART } from '../actions'
+// @flow
+import { type CartAction } from '../actions';
+import { type CartState } from '../types';
 
-const initialState = {
+
+const initialState: CartState = {
   items: [],
 };
 
-function cart(state = initialState, action) {
+function cart(state: CartState = initialState, action: CartAction) {
   switch (action.type) {
-    case ADD_TO_CART:
-      const elem = state.items.findIndex(elem => elem.product.id === action.product.id);
+    case 'ADD_TO_CART': {
+      const { id } = action.product;
+      const elem = state.items.findIndex(item => item.product.id === id);
       if (elem === -1) {
         return {
           ...state,
@@ -25,14 +29,15 @@ function cart(state = initialState, action) {
           },
           ...state.items.slice(elem + 1),
         ],
-      }
-    case REMOVE_FROM_CART:
+      };
+    }
+    case 'REMOVE_FROM_CART':
       return {
         ...state,
         items: [...state.items.slice(0, action.index), ...state.items.slice(action.index + 1)],
-      }
+      };
     default:
-      return state; 
+      return state;
   }
 }
 

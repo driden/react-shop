@@ -1,38 +1,40 @@
-import { GET_PRODUCTS, RECEIVE_PRODUCTS, RECEIVE_CATEGORIES, GET_CATEGORIES } from '../actions';
+// @flow
+import { type ProductAction } from '../actions';
+import { type ProductState } from '../types';
 
-const initialState = {
+
+const initialState: ProductState = {
   items: [],
-  categories: [], 
+  categories: [],
   isLoading: false,
 };
 
-function products(state = initialState, action) {
-  
+function products(state: ProductState = initialState, action: ProductAction) {
   switch (action.type) {
-    case GET_PRODUCTS:
-      return {  
+    case 'GET_PRODUCTS':
+      return {
         ...state,
         isLoading: true,
-      }
-    case RECEIVE_PRODUCTS:
+      };
+    case 'RECEIVE_PRODUCTS':
       return {
         ...state,
         items: action.products,
         isLoading: false,
-      }
-    case GET_CATEGORIES:
-      return {  
+      };
+    case 'GET_ALL_CATEGORIES':
+      return {
         ...state,
         isLoading: true,
-      }
-    case RECEIVE_CATEGORIES:
+      };
+    case 'RECEIVE_CATEGORIES':
       return {
         ...state,
         categories: action.categories,
         isLoading: false,
-      }
+      };
     default:
-      return state
+      return state;
   }
 }
 

@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 // Redux-Saga
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers';
@@ -14,9 +14,9 @@ import rootSaga from './sagas';
 
 import App from './containers/App';
 
-const sagaMiddleware = createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
-  //window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   rootReducer,
   applyMiddleware(sagaMiddleware, createLogger()),
 );

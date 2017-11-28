@@ -9,6 +9,14 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
+router.get('/index', (req, res, next) => {
+  const {startIndex, stopIndex} = req.query;
+  Product.findAll({ offset: startIndex, limit: (stopIndex - startIndex)  })
+    .then(res.send.bind(res))
+    .catch(next);
+});
+
+
 router.get('/:id', (req, res, next) => {
   Product.findById(req.params.id)
     .then((product) => {

@@ -55,6 +55,16 @@ class App extends React.Component<Props, State> {
 
   addProduct = () => {}
 
+  isRowLoaded = ({ index }) => {
+    console.log ('hello')
+    return !!this.props.products[index]
+  }
+
+  loadMoreRows = () => {
+    console.log('RUNMNING')
+    return this.props.getProducts();
+  }
+
   render() {
     return (
       this.props.loading ?
@@ -76,6 +86,8 @@ class App extends React.Component<Props, State> {
                   <Grid
                     products={this.props.products}
                     selectedCategory={Number(new URLSearchParams(props.location.search).get('category'))}
+                    isRowLoaded={this.isRowLoaded}
+                    loadMoreRows={this.loadMoreRows}
                     {...props}
                   />
                 )}

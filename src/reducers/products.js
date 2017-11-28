@@ -19,7 +19,7 @@ function products(state: ProductState = initialState, action: ProductAction) {
     case 'RECEIVE_PRODUCTS':
       return {
         ...state,
-        items: action.products,
+        items: [...state.items, ...action.products],
         isLoading: false,
       };
     case 'GET_ALL_CATEGORIES':

@@ -8,6 +8,7 @@ import s from './Item.css';
 const Item = ({ product, match, style }: { product: Product, match: Match, style: Object }) => (
   <Link style={style} to={`${match.url}/${String(product.id)}`}>
     <div>
+      <img src={product.image} alt={product.name} />
       <h1>{product.name}</h1>
       <p>{product.price}</p>
     </div>

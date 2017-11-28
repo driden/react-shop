@@ -5,6 +5,7 @@ import {
   List,
   WindowScroller,
   InfiniteLoader,
+  AutoSizer,
 } from 'react-virtualized';
 import Item from './Item';
 import { type Product } from '../types';
@@ -32,22 +33,23 @@ const Grid = ({
       rowCount={112}
     >
       {({ onRowsRendered, registerChild }) => (
-              <List
+        <AutoSizer>
+          {({ height, width }) => (
+            <List
               ref={registerChild}
-              autoHeight
-              height={800}
-              width={800}
+              height={height}
+              width={width}
               onRowsRendered={onRowsRendered}
-              rowCount={112}
-              rowHeight={200}
-                rowRenderer={({ key, index, style }) => (
-                  filterProducts[index] ?
-                    <Item key={key} style={style} {...props} product={filterProducts[index]} />
-                    : null 
-                )} 
-              />
-        )}
-      </InfiniteLoader>
+              rowCount={filterProducts.length}
+              rowHeight={400}
+              rowRenderer={({ key, index, style }) => (
+                <Item key={key} style={style} {...props} product={filterProducts[index]} />
+              )} 
+            />
+          )}
+        </AutoSizer>
+      )}
+    </InfiniteLoader>
   );
 };
 

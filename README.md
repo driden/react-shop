@@ -818,7 +818,7 @@ Por último, y guiandote de lo anterior, crea las acciones necesarias y el saga 
 
 ### Pasando a React Virtualized
 
-Nuestro Grid estaba muy bonito, pero que pasaría si tuviesemos que renderizar miles y miles de productos? Seguramente nuestra página iría bastante lento, por eso vamos a agregar el componente de `Collection` de React virtualized que va a mantener la vista bastante similar a como la teniamos pero mucho mas eficienta a través del windowing.
+Nuestro Grid estaba muy bonito, pero que pasaría si tuviesemos que renderizar miles y miles de productos? Seguramente nuestra página iría bastante lento, por eso vamos a agregar el componente de `List` de React virtualized que va a renderizar una lista de nuestros productos, y ademas vamos a usar el `InfiniteLoader` para hacer un lazy loading de nuestros productos
 
 
 Lo primero que vamos a hacer es instalar `react-virtualized`:
@@ -829,11 +829,11 @@ npm install --save react-virtualized
 
 Una vez instalado vamos a ir a nuestro componente `Grid` para modificarlo.
 
-### Collection
+### List
 
-Nuestra Grid va a cambiar completamente su vista. Lo primero que vamos a hacer es importar `Collection` de `react-virtualized` un componente que nos va a permitir renderear una colección de datos.
+Nuestra Grid va a cambiar completamente su vista. Lo primero que vamos a hacer es importar `List` de `react-virtualized` un componente que nos va a permitir renderear una lista de datos.
 
-`Collection` va a tomar los siguientes props. `height` y `widthp que por ahora vamos a hardcodear el valor de altura y ancho que queremos. `cellCount` el cual vamos a tener que pasarle el length de nuestra lista. `cellSizeAndPositionGetter` va a tomar una función el cual va a tomar como parametro el indice del producto en el que estamos, y tiene que devolver un objeto con la propiedad `height` y `width` de la celda, y la propiedad `x` y `y`, la cual va a tomar la posición `top` y `left` de la celda que vamos a tener que calcular.
+`List` va a tomar los siguientes props. `height` y `width` que por ahora vamos a hardcodear el valor de altura y ancho que queremos. `rowCount` el cual vamos a tener que pasarle el length de nuestra lista, y `rowHeight` que le vamos a pasar la altura que queremos que tenga cada row. 
 
 Finalmente, nuestra prop mas importante es `cellRenderer`, el cual es la función que va a renderizar cada celda. Esta función va a recibir las props, `key` que nos va a dar un identificador único para el iterador, `style` que le vamos a tener que pasar al primer elemento de `Item` para que reciba los estilos de virtualized e `index` el cual nos va a servir para acceder a los productos. 
 
@@ -843,8 +843,20 @@ No te olvides de importar `'react-virtualized/styles.css'` globalmente para agre
 
 Ahora que ya estamos renderizando nuestra grilla agreguemos la posibilidad de no tener que harcodear la altura. Importa `AutoSizer` a tu grid.
 
+Rodea a `List` dentro de `AutoSizer`. Este toma como hijo una función que va a recibir los parametros `height` y `width` dentro de sus props y tiene que retornar nuestra colleción. Usa esas dos propiedades y reemplaza sus valores harcodeados.  
 
-Rodea a `Collection` dentro de `AutoSizer`. Este toma como hijo una función que va a recibir los parametros `height` y `width` dentro de sus props y tiene que retornar nuestra colleción. Usa esas dos propiedades y reemplaza sus valores harcodeados.  
+Seguramente tengas que cambiar el CSS de los componentes que rodean el AutoSizer para que ocupen el 100% de la página de altura. Si no no va a funcionar correctamente.
 
-Seguramente tengas que cambiar el CSS de los componentes que rodean el AutoSizer para que ocupen el 100% de la página de altura. Si no no va a funcionar correctamente.  
+### Cambiando Sagas
+
+Ahora para usar el `InfiniteLoader` vamos a tener que primero modificar Saga para que busque los productos de a pedazos. Para eso vamos a usar el link `http://develop.plataforma5.la:3000/api/products/index?startIndex=0&stopIndex=1`donde vamos a pasarle entre que indices queremos ir a buscar los productos, vamos a tener que hacer algo dentro de saga para que esos indices vayan aumentando a medida que vamos pidiendo más productos.
+
+### InfiniteLoader
+
+Ahora importa el componente `InfiniteLoader` el cual vamos a ponerlo sobre el AutoSizer. `InfiniteLoader` va a tener que tomar dos funciones, `isRowLoaded` que va a tomar un objeto con la propiedad `index` y retorna un booleano dependiente de si tenemos ese elemento en nuestra lista y `loadMoreRows` la cual se va a encargar de llamar a nuestra acción para buscar más productos. Finalmente le tenemos que pasar `rowCount` que es el numero total de elementos en la lista de la base de datos, y no la que tenemos en el cliente este numero no tiene que ser exacto, asi que para una lista muy grande podemos poner un numero lo suficientemente grande, sino tendriamos q ir a buscar esa información de alguna forma y colocarla ahí.
+
+Dentro de `InfiniteLoader` va a haber una función  que va a recibir como props `onRowsRendered, registerChild`. La primera tiene que ser pasada como prop de `List` con el mismo nombre, la otra se pone dentro del prop `ref` de `List`. 
+
+Una vez que hayamos hecho todos los pasos deberíamos ser capaces de ver nuestra lista cargando.   
+
 

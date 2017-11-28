@@ -28,28 +28,16 @@ export function* getAllCategories() {
   yield put(receiveCategories(categories.data));
 }
 
-let start = 1;
-let end = 20;
-
-export function* getProducts({ resolve }) {
-  const products: Product[] = yield call(getProductsApi, start, end);
-  resolve && resolve()
-  start += 20;
-  end += 20;
-  yield put(receiveProducts(products));
-
-}
-
-export function* getAllProducts({ resolve } = { undefined }) {
-   let start = 1;
-   let end = 20;
-   while(true) { 
+export function* getAllProducts() {
+  let start = 1;
+  let end = 20;
+  while (true) {
     yield take(GET_PRODUCTS);
     const products: Product[] = yield call(getProductsApi, start, end);
     start += 20;
     end += 20;
     yield put(receiveProducts(products));
-   }
+  }
 }
 
 // export function* getAllCategories() {
@@ -58,9 +46,6 @@ export function* getAllProducts({ resolve } = { undefined }) {
 // }
 
 // El watcher Saga: va a invocar a getAllProductsAndCategories en cada GET_PRODUCTS
-export function* watchGetProducts() {
-  yield takeEvery(GET_PRODUCTS, getProducts);
-}
 
 export function* watchGetCategories() {
   yield takeEvery(GET_CATEGORIES, getAllCategories);
@@ -69,7 +54,7 @@ export function* watchGetCategories() {
 export default function* root() {
   yield all([
     fork(getAllProducts),
-    //fork(watchGetProducts),
+    // fork(watchGetProducts),
     fork(watchGetCategories),
   ]);
 }

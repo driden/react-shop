@@ -32,7 +32,7 @@ const mapStateToProps = (state: ReduxState) => ({
 
 function mapDispatchToProps(dispatch: Dispatch<Action>) {
   return {
-    getProducts: resolve => dispatch(getAllProducts(resolve)),
+    getProducts: () => dispatch(getAllProducts()),
     getCategories: () => dispatch(getAllCategories()),
     receiveProducts: (products: Product[]) => dispatch(receiveProducts(products)),
     receiveCategories: (categories: Category[]) => dispatch(receiveCategories(categories)),
@@ -60,12 +60,7 @@ class App extends React.Component<Props, State> {
   }
 
   loadMoreRows = () => {
-    let resolve;
-    const promise = new Promise((res) => {
-      resolve = res;
-    });
-    this.props.getProducts(resolve);
-    return promise;
+    this.props.getProducts();
   }
 
   render() {

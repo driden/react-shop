@@ -28,14 +28,16 @@ export function* getAllCategories() {
   yield put(receiveCategories(categories.data));
 }
 
-let start = 0;
+let start = 1;
 let end = 20;
 
-export function* getProducts() {
+export function* getProducts({ resolve }) {
   const products: Product[] = yield call(getProductsApi, start, end);
-  yield put(receiveProducts(products));
+  resolve && resolve()
   start += 20;
   end += 20;
+  yield put(receiveProducts(products));
+
 }
 
 // export function* getAllProducts() {

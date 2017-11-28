@@ -2,24 +2,14 @@
 import * as React from 'react';
 import { type ContextRouter } from 'react-router';
 import { 
-  Collection,
-  AutoSizer,
-  InfiniteLoader
+  List,
+  WindowScroller,
+  InfiniteLoader,
 } from 'react-virtualized';
 import Item from './Item';
 import { type Product } from '../types';
 import s from './Grid.css';
 import 'react-virtualized/styles.css'; // only needs to be imported once
-
-
-function cellSizeAndPositionGetter ({ index }) {
-  return {
-    height: 400,
-    width: 250,
-    x: index%4 * 300,
-    y: Math.floor(index/4) * 300,
-  }
-}
 
 const Grid = ({
   products,
@@ -42,22 +32,20 @@ const Grid = ({
       rowCount={112}
     >
       {({ onRowsRendered, registerChild }) => (
-        <AutoSizer
-        ref={registerChild}
-        >
-          {({ width, height }) => (
-              <Collection
-              height={height}
-              onCellRendered={onRowsRendered}
-              cellCount={filterProducts.length}
-              width={width}
-              cellSizeAndPositionGetter={cellSizeAndPositionGetter}
-              cellRenderer={({ key, index, style }) => (
-                  <Item key={key} style={style} {...props} product={filterProducts[index]} /> 
-              )} 
+              <List
+              ref={registerChild}
+              autoHeight
+              height={800}
+              width={800}
+              onRowsRendered={onRowsRendered}
+              rowCount={112}
+              rowHeight={200}
+                rowRenderer={({ key, index, style }) => (
+                  filterProducts[index] ?
+                    <Item key={key} style={style} {...props} product={filterProducts[index]} />
+                    : null 
+                )} 
               />
-            )}
-          </AutoSizer>
         )}
       </InfiniteLoader>
   );

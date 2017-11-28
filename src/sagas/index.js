@@ -1,4 +1,4 @@
-import { put, call, fork, takeEvery, all } from 'redux-saga/effects';
+import { take, put, call, fork, takeEvery, all } from 'redux-saga/effects';
 import axios, { type $AxiosXHR } from 'axios';
 // @flow
 import { GET_PRODUCTS, GET_CATEGORIES, receiveProducts, receiveCategories } from '../actions';
@@ -40,11 +40,17 @@ export function* getProducts({ resolve }) {
 
 }
 
-// export function* getAllProducts() {
-//   const products = yield call(getAllProductsAPI);
-//   yield take(RECEIVE_CATEGORIES);
-//   yield put(receiveProducts(products));
-// }
+export function* getAllProducts({ resolve } = { undefined }) {
+   let start = 1;
+   let end = 20;
+   while(true) { 
+    yield take(GET_PRODUCTS);
+    const products: Product[] = yield call(getProductsApi, start, end);
+    start += 20;
+    end += 20;
+    yield put(receiveProducts(products));
+   }
+}
 
 // export function* getAllCategories() {
 //   const categories = yield call(getAllCategoriesAPI);
@@ -62,7 +68,8 @@ export function* watchGetCategories() {
 
 export default function* root() {
   yield all([
-    fork(watchGetProducts),
+    fork(getAllProducts),
+    //fork(watchGetProducts),
     fork(watchGetCategories),
   ]);
 }

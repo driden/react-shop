@@ -15,8 +15,8 @@ function cellSizeAndPositionGetter ({ index }) {
   return {
     height: 400,
     width: 250,
-    x: index%3 * 300,
-    y: Math.floor(index/3) * 300,
+    x: index%4 * 300,
+    y: Math.floor(index/4) * 300,
   }
 }
 

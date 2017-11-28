@@ -18,6 +18,8 @@ El Proyecto va estar separado en 8 Partes, estas serán:
 - Parte 4: Dandole Estilo a nuestra Página
 - Parte 5: Formularios
 - Parte 6: Navegando en nuestro E-commerce
+- Parte 7: Redux-Saga
+- Parte 8: React Virtualized
 
 
 ## Parte 1: Empezando de Cero
@@ -811,3 +813,38 @@ export default function *root() {
 Por último nos falta modificar `App.jsx` para, en vez de hacer un fetch en el `ComponenteDidMount`, hagamos un dispatch de la acción que está esperando el Saga.
 
 Por último, y guiandote de lo anterior, crea las acciones necesarias y el saga para poder realizar un POST de un producto.
+
+## Parte 8: React Virtualized
+
+### Pasando a React Virtualized
+
+Nuestro Grid estaba muy bonito, pero que pasaría si tuviesemos que renderizar miles y miles de productos? Seguramente nuestra página iría bastante lento, por eso vamos a agregar el componente de `Collection` de React virtualized que va a mantener la vista bastante similar a como la teniamos pero mucho mas eficienta a través del windowing.
+
+
+Lo primero que vamos a hacer es instalar `react-virtualized`:
+
+```
+npm install --save react-virtualized
+```
+
+Una vez instalado vamos a ir a nuestro componente `Grid` para modificarlo.
+
+### Collection
+
+Nuestra Grid va a cambiar completamente su vista. Lo primero que vamos a hacer es importar `Collection` de `react-virtualized` un componente que nos va a permitir renderear una colección de datos.
+
+`Collection` va a tomar los siguientes props. `height` y `widthp que por ahora vamos a hardcodear el valor de altura y ancho que queremos. `cellCount` el cual vamos a tener que pasarle el length de nuestra lista. `cellSizeAndPositionGetter` va a tomar una función el cual va a tomar como parametro el indice del producto en el que estamos, y tiene que devolver un objeto con la propiedad `height` y `width` de la celda, y la propiedad `x` y `y`, la cual va a tomar la posición `top` y `left` de la celda que vamos a tener que calcular.
+
+Finalmente, nuestra prop mas importante es `cellRenderer`, el cual es la función que va a renderizar cada celda. Esta función va a recibir las props, `key` que nos va a dar un identificador único para el iterador, `style` que le vamos a tener que pasar al primer elemento de `Item` para que reciba los estilos de virtualized e `index` el cual nos va a servir para acceder a los productos. 
+
+No te olvides de importar `'react-virtualized/styles.css'` globalmente para agregar la hoja de estilo de react-virtualized.
+
+### AutoSizer
+
+Ahora que ya estamos renderizando nuestra grilla agreguemos la posibilidad de no tener que harcodear la altura. Importa `AutoSizer` a tu grid.
+
+
+Rodea a `Collection` dentro de `AutoSizer`. Este toma como hijo una función que va a recibir los parametros `height` y `width` dentro de sus props y tiene que retornar nuestra colleción. Usa esas dos propiedades y reemplaza sus valores harcodeados.  
+
+Seguramente tengas que cambiar el CSS de los componentes que rodean el AutoSizer para que ocupen el 100% de la página de altura. Si no no va a funcionar correctamente.  
+

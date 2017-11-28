@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { type Product } from '../types';
 import s from './Item.css';
 
-const Item = ({ product, match }: { product: Product, match: Match }) => (
-  <Link to={`${match.url}/${String(product.id)}`}>
-    <div className={s.item}>
-      <img alt={product.name} src={product.image} />
+const Item = ({ product, match, style }: { product: Product, match: Match, style: Object }) => (
+  <Link style={style} to={`${match.url}/${String(product.id)}`}>
+    <div>
+      <img src={product.image} alt={product.name} />
       <h1>{product.name}</h1>
       <p>{product.price}</p>
     </div>

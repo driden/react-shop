@@ -58,6 +58,14 @@ class App extends React.Component<Props, State> {
     axios.post('http://develop.plataforma5.la:3000/api/cart/', { productId });
   }
 
+  isRowLoaded = ({ index }) => {
+    return !!this.props.products[index];
+  }
+
+  loadMoreRows = () => {
+    this.props.getProducts();
+  }
+
   render() {
     return (
       this.props.loading ?
@@ -79,6 +87,8 @@ class App extends React.Component<Props, State> {
                   <Grid
                     products={this.props.products}
                     selectedCategory={Number(new URLSearchParams(props.location.search).get('category'))}
+                    isRowLoaded={this.isRowLoaded}
+                    loadMoreRows={this.loadMoreRows}
                     {...props}
                   />
                 )}

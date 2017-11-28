@@ -857,6 +857,8 @@ Ahora importa el componente `InfiniteLoader` el cual vamos a ponerlo sobre el Au
 
 Dentro de `InfiniteLoader` va a haber una función  que va a recibir como props `onRowsRendered, registerChild`. La primera tiene que ser pasada como prop de `List` con el mismo nombre, la otra se pone dentro del prop `ref` de `List`. 
 
+Ahora ten cuidado, cada vez que vamos a buscar productos si cambias la prop de loading, nuestro componente `Grid` se desmontara y montara nuevamente lo que hará que vayamos al principio de la lista, asi que elimina el cambio de `loading` en el reducer cuando vayamos a buscar los productos.
+
 Una vez que hayamos hecho todos los pasos deberíamos ser capaces de ver nuestra lista cargando.   
 
 

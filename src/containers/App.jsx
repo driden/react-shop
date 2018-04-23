@@ -4,6 +4,8 @@ import axios, { type $AxiosXHR } from 'axios';
 import Grid from '../components/Grid';
 import { type Product } from '../types';
 
+const BASE_URL = 'http://develop.plataforma5.la:3000/api';
+
 type Props = {};
 
 type State = {
@@ -18,7 +20,7 @@ export default class App extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    axios.get('/products')
+    axios.get(`${BASE_URL}/products`)
       .then((res: $AxiosXHR<Product[]>): Product[] => res.data)
       .then((products: Product[]) => this.setState({ products, loading: false }));
   }

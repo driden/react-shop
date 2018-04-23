@@ -5,6 +5,8 @@ import Grid from '../components/Grid';
 import Sidebar from '../components/Sidebar';
 import { type Product, type Category } from '../types';
 
+const BASE_URL = 'http://develop.plataforma5.la:3000/api';
+
 type Props = {};
 
 type State = {
@@ -28,13 +30,13 @@ export default class App extends React.Component<Props, State> {
   }
 
   fetchProducts() {
-    return axios.get('/products')
+    return axios.get(`${BASE_URL}/products`)
       .then((res: $AxiosXHR<Product[]>) => res.data)
       .then((products: Product[]) => this.setState({ products }));
   }
 
   fetchCategories() {
-    return axios.get('/categories')
+    return axios.get(`${BASE_URL}/categories`)
       .then((res: $AxiosXHR<Category[]>) => res.data)
       .then((categories: Category[]) => this.setState({ categories }));
   }

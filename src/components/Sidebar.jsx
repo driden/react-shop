@@ -12,9 +12,9 @@ const Sidebar = ({
 }) => (
   <ul className={s.sidebar}>
     <li>
-      <button onClick={() => changeCategory(null)}>
+      <h2 onClick={() => changeCategory(null)}>
         All
-      </button>
+      </h2>
     </li>
     {categories.map(category => (
       <li key={category.id}>

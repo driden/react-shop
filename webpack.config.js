@@ -8,6 +8,8 @@ const cssLoader = {
 };
 
 module.exports = {
+  mode: 'development',
+  cache: false,
   entry: './src/index.js',
   output: {
     path: __dirname,
@@ -18,7 +20,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /(\.js|\.jsx)$/,
         loader: 'babel-loader',
@@ -42,4 +44,7 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    historyApiFallback: true,
+  }
 };

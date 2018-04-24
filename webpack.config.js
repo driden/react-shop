@@ -2,12 +2,13 @@ const cssLoader = {
   loader: 'css-loader',
   options: {
     modules: true,
-    localIdentName: '[path][name]__[local]--[hash:base64:5]',
-    ignore: '/node_modules/',
+    localIdentName: '[path][name]__[local]--[hash:base64:5]'
   },
 };
 
 module.exports = {
+  mode: 'development',
+  cache: false,
   entry:'./src/index.js',
   output: {
     path: __dirname,
@@ -18,7 +19,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /(\.js|\.jsx)$/,
         loader: 'babel-loader',
@@ -28,14 +29,12 @@ module.exports = {
         test: /\.css$/,
         use: [
           'style-loader',
-          'css-modules-flow-types-loader',
           cssLoader,
         ],
       }, {
         test: /\.styl$/,
         use: [
           'style-loader',
-          'css-modules-flow-types-loader',
           cssLoader,
           'stylus-loader',
         ],

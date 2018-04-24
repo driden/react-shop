@@ -83,6 +83,7 @@ class App extends React.Component<Props, State> {
               <Route
                 path="/products/:id"
                 render={(props: ContextRouter) => {
+                  if (!this.props.products.length) return 'Loading...'
                   const selectedProduct = this.props.products.find(product =>
                     String(product.id) === props.match.params.id);
                   return (

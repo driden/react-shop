@@ -9,6 +9,7 @@ const cssLoader = {
 
 module.exports = {
   mode: 'development',
+  cache: false,
   entry:'./src/index.js',
   output: {
     path: __dirname,

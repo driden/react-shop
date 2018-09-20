@@ -1,6 +1,5 @@
 module.exports = {
-  mode: 'development',
-  entry:'./src/index.js',
+  entry: './src/index.js',
   output: {
     path: __dirname,
     filename: './public/bundle.js',
@@ -15,7 +14,7 @@ module.exports = {
         test: /(\.js|\.jsx)$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        query: { presets: [ 'env', 'stage-0', 'react'] },
+        query: { presets: ['env', 'stage-0', 'react'] },
       },
     ],
   },

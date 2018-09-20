@@ -1,13 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <style>
+    html {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .grid-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      background-color: rgba(243, 117, 33, 0.212);
+
+    }
+
+    .grid-item {
+
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      margin-top: 10px;
+      font-size: 30px;
+      text-align: center;
+      width: 30%;
+      border-radius: 1%;
+
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .grid-item img {
+      height: 250px;
+      width: auto;
+    }
+    
+  </style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+
+  <title>React shop</title>
 </head>
+
 <body>
   <div id='app'></div>
   <script src="./bundle.js"></script>
 </body>
+
 </html>

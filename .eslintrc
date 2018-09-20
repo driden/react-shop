@@ -7,7 +7,7 @@
     "jest": true
   },
   "extends": ["airbnb", "plugin:flowtype/recommended"],
-  "plugins": ["react", "flowtype"],
+  "plugins": ["react"],
   "settings": {
     "import/resolver": "webpack"
   },

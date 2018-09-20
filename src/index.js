@@ -1,9 +1,8 @@
-// @flow
-/* eslint-disable react/jsx-filename-extension */
-
 import React from 'react';
 import { render } from 'react-dom';
+import App from './containers/app'
+
 
 const appDiv = document.getElementById('app')
 
-appDiv && render(<div>Hello World</div>, appDiv);
+appDiv && render(<App />, appDiv);
